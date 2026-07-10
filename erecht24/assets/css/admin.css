@@ -1,0 +1,303 @@
+.form-table td > *:not(:last-child) {
+  margin-bottom: 16px !important;
+}
+
+.erecht24-legal-texts-admin {
+  color: #1d2327;
+}
+
+.erecht24-hidden,
+input.erecht24-hidden {
+  display: none;
+}
+
+.erecht24-admin-header {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #dcdcde;
+  display: flex;
+  justify-content: space-between;
+  margin: 18px 0 16px;
+  padding: 20px 24px;
+}
+
+.erecht24-admin-header h1 {
+  margin: 0 0 8px;
+}
+
+.erecht24-admin-logo {
+  height: auto;
+  max-width: 240px;
+}
+
+.erecht24-legal-texts-admin .nav-tab-wrapper {
+  border-bottom: 1px solid #dcdcde;
+  margin-bottom: 0;
+}
+
+.erecht24-legal-texts-admin .nav-tab {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.erecht24-legal-texts-admin .nav-tab-active {
+  background-color: #fff;
+  border-bottom-color: #fff;
+}
+
+.erecht24-panel {
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-top: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  max-width: 1180px;
+  padding: 24px;
+}
+
+.erecht24-panel textarea[readonly] {
+  background: #f6f7f7;
+  color: #50575e;
+}
+
+.erecht24-inline-form {
+  margin: 14px 0;
+}
+
+.erecht24-form-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.erecht24-form-actions form {
+  margin: 0;
+}
+
+.erecht24-prominent-notice.notice-error {
+  background: #fcf0f1;
+  border-left-width: 8px;
+  font-size: 14px;
+}
+
+.erecht24-admin-warning {
+  background: #fff8e5;
+  border-left: 5px solid #dba617;
+  margin: 14px 20px 14px 0;
+  padding: 12px 14px;
+}
+
+.erecht24-danger-text {
+  color: #b32d2e;
+  font-weight: 600;
+}
+
+.erecht24-delete-api-key-btn {
+  border-color: #b32d2e !important;
+  color: #b32d2e !important;
+}
+
+.erecht24-delete-api-key-btn:hover,
+.erecht24-delete-api-key-btn:focus {
+  background: #b32d2e !important;
+  border-color: #b32d2e !important;
+  color: #fff !important;
+}
+
+.erecht24-status-pill {
+  border-radius: 999px;
+  display: inline-block;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+
+.erecht24-status-valid,
+.erecht24-status-unchecked {
+  background: #edfaef;
+  color: #008a20;
+}
+
+.erecht24-status-invalid,
+.erecht24-status-missing {
+  background: #fcf0f1;
+  color: #b32d2e;
+}
+
+.erecht24-segmented {
+  background: #f0f0f1;
+  border-radius: 6px;
+  display: inline-flex;
+  padding: 3px;
+}
+
+.erecht24-segmented label {
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  padding: 7px 14px;
+}
+
+.erecht24-segmented input {
+  left: -9999px;
+  position: absolute;
+}
+
+.erecht24-segmented .is-active {
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  color: #0a4b78;
+}
+
+.erecht24-segmented input:disabled + span {
+  color: #8c8f94;
+  cursor: not-allowed;
+}
+
+.erecht24-shortcodes {
+  background: #f6f7f7;
+  border: 1px solid #dcdcde;
+  display: grid;
+  gap: 8px;
+  margin: 12px 20px 16px 0;
+  padding: 12px;
+}
+
+.erecht24-shortcodes code {
+  display: block;
+  width: fit-content;
+}
+
+.erecht24-shortcode-list {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.erecht24-help-toc {
+  background: #f6f7f7;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 0 0 28px;
+  padding: 14px 20px;
+}
+
+.erecht24-help-toc-title {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.erecht24-help-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.erecht24-help-toc-list li {
+  margin-bottom: 4px;
+}
+
+.erecht24-help-toc-list a {
+  text-decoration: none;
+}
+
+.erecht24-help-toc-list a:hover {
+  text-decoration: underline;
+}
+
+.erecht24-help-toc-h2 a,
+.erecht24-help-toc-h3 a {
+  color: #056688;
+}
+
+.erecht24-help-content {
+  line-height: 1.6;
+  /* max-width: 960px; */
+}
+
+.erecht24-help-content h2:first-child {
+  margin-top: 0;
+}
+
+.erecht24-help-content h2,
+.erecht24-help-content h3,
+.erecht24-help-content h4,
+.erecht24-help-content h5,
+.erecht24-help-content h6 {
+  line-height: 1.25;
+  margin: 28px 0 12px;
+}
+
+.erecht24-help-content p {
+  margin-right: 20px;
+}
+
+.erecht24-help-content li {
+  margin-bottom: 8px;
+}
+
+.erecht24-help-content code {
+  background: #f6f7f7;
+  border: 1px solid #dcdcde;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+.erecht24-status-table {
+  margin: 12px 0 16px;
+  max-width: 860px;
+}
+
+.erecht24-block-editor-preview {
+  border: 1px solid #dcdcde;
+  min-height: 44px;
+  padding: 12px;
+}
+
+.dashicons {
+  color: #056688;
+}
+
+.wp-core-ui .button-secondary,
+.wp-core-ui .button {
+  color: #056688;
+  border: 1px solid #056688;
+  transition: background 0.3s;
+}
+
+.wp-core-ui .button-secondary:hover,
+.wp-core-ui .button-secondary:focus,
+.wp-core-ui .button:hover {
+  background: #044f67;
+  border-color: #044f67;
+  color: #fff;
+}
+
+.submit {
+  padding-bottom: 0;
+}
+
+p.submit {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wp-core-ui .button-primary {
+  background-color: #056688;
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .erecht24-admin-header {
+    display: block;
+  }
+
+  .erecht24-admin-logo {
+    margin-top: 14px;
+    max-width: 190px;
+  }
+}

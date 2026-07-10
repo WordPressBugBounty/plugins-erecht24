@@ -1,0 +1,502 @@
+# Copyright (C) 2026 eRecht24
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: eRecht24 Legal Texts 4.0.0\n"
+"Report-Msgid-Bugs-To: zander@erecht24.de\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-25T08:30:29+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: erecht24\n"
+
+#. Plugin Name of the plugin
+#: erecht24.php:3
+#: src/Admin/Admin_Page.php:162
+msgid "eRecht24 Legal Texts"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: erecht24.php:4
+msgid "https://www.e-recht24.de/"
+msgstr ""
+
+#. Description of the plugin
+#: erecht24.php:5
+msgid "This plugin allows the easy integration of imprint and privacy policy of eRecht24."
+msgstr ""
+
+#. Author of the plugin
+#: erecht24.php:9
+msgid "eRecht24"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:71
+#: src/Admin/Admin_Page.php:72
+#: src/Admin/Admin_Page.php:209
+msgid "eRecht24 Rechtstexte"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:138
+msgid "Einstellungen"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:161
+msgid "Details zu eRecht24 Legal Texts"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:163
+msgid "Details anzeigen"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:202
+msgid "Sie haben keine Berechtigung für diese Seite."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:210
+msgid "API-Schlüssel verwalten, Rechtstexte abrufen und per Shortcode oder Gutenberg-Block ausgeben."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:236
+#: src/Admin/Admin_Page.php:318
+#: src/Admin/Admin_Page.php:371
+msgid "Sie haben keine Berechtigung für diese Aktion."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:251
+msgid "Der lokale API-Schlüssel wurde entfernt. Der API-Client konnte bei eRecht24 nicht gelöscht werden."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:257
+msgid "Der API-Schlüssel wurde entfernt."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:274
+msgid "Der API-Schlüssel wurde gespeichert. Push-Updates konnten nicht registriert werden; manuelle Synchronisierung funktioniert weiterhin."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:286
+msgid "Der API-Schlüssel wurde gespeichert und der API-Client wurde registriert."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:302
+msgid "Die Rechtstext-Einstellungen wurden gespeichert."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:307
+msgid "Die Google-Analytics-Einstellungen wurden gespeichert."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:310
+msgid "Es wurden keine Änderungen erkannt."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:350
+msgid "Einige Rechtstexte konnten nicht synchronisiert werden:"
+msgstr ""
+
+#. translators: %s: List of document labels.
+#: src/Admin/Admin_Page.php:357
+#, php-format
+msgid "Synchronisiert: %s"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:363
+#: src/Admin/Admin_Page.php:1004
+#: src/Admin/Admin_Page.php:1036
+msgid "Es wurde kein gültiger Rechtstext-Typ übergeben."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:378
+#: src/Admin/Admin_Page.php:1254
+msgid "Push-Test übersprungen: kein gültiger API-Schlüssel oder kein registrierter Client."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:391
+msgid "Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:405
+#: src/Admin/Admin_Page.php:456
+#: src/Admin/Admin_Page.php:465
+msgid "API-Schlüssel"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:418
+#: src/Admin/Admin_Page.php:931
+msgid "Google Analytics"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:422
+#: src/Admin/Admin_Page.php:486
+msgid "Status"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:426
+#: src/Admin/Admin_Page.php:626
+msgid "Hilfe"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:457
+msgid "Externe API-Requests werden nur durch Speichern des API-Schlüssels, manuelle Synchronisierung oder einen autorisierten eRecht24-Push ausgelöst."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:468
+msgid "Gespeicherter API-Schlüssel unverändert"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:468
+msgid "API-Schlüssel eintragen"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:472
+msgid "Gespeichert:"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:474
+msgid "API-Schlüssel entfernen"
+msgstr ""
+
+#. translators: %s: eRecht24 project manager URL.
+#: src/Admin/Admin_Page.php:479
+#, php-format
+msgid "Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Website im <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">eRecht24 Projekt Manager für Websites</a> erzeugt haben."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:489
+msgid "Remote-Synchronisierung ist deaktiviert, bis ein gültiger API-Schlüssel gespeichert wurde. Bereits gespeicherte Rechtstexte werden weiterhin ausgegeben."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:492
+msgid "Push-Endpoint"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:494
+msgid "Push-Updates sind registriert."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:494
+msgid "Push-Updates sind nicht registriert. Manuelle Synchronisierung ist davon unabhängig."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:496
+msgid "Client-ID:"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:505
+msgid "API-Einstellungen speichern"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:515
+msgid "Alle Rechtstexte synchronisieren"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:541
+msgid "Unbekannter Rechtstext."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:554
+msgid "Kein gültiger API-Schlüssel aktiv. Remote-Synchronisierung ist deaktiviert. Bereits synchronisierte und lokale Rechtstexte werden weiterhin ausgegeben."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:563
+msgid "Datenquelle"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:567
+msgid "HTML-Code (DE)"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:568
+msgid "HTML-Code (EN)"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:569
+msgid "Lokales HTML (DE)"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:570
+msgid "Lokales HTML (EN)"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:572
+msgid "Letzte Änderung im eRecht24 Projekt Manager"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:573
+msgid "Letzte lokale Änderung"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:577
+msgid "Rechtstext-Einstellungen speichern"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:583
+msgid "Diesen Rechtstext synchronisieren und speichern"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:590
+msgid "Lokale Daten mit den zuletzt synchronisierten Texten überschreiben"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:609
+msgid "Seitennavigation"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:610
+msgctxt "Überschrift des Inhaltsverzeichnisses in der Hilfe"
+msgid "Inhalt"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:627
+msgid "Die Hilfedatei konnte nicht geladen werden."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:932
+msgid "Sie können den vollständigen Google Analytics Tracking-Code inkl. Codesnippet für das Setzen des Opt-Out-Cookies auch über dieses Plugin generieren lassen."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:933
+msgid "Google Analytics ist standardmäßig deaktiviert. Aktiviere es nur, wenn deine Website die notwendige Einwilligung einholt."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:939
+msgid "Measurement-ID"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:942
+msgid "Optionen"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:943
+msgid "Google Analytics Code ausgeben"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:944
+msgid "Usercentrics-kompatibel als deaktiviertes Script ausgeben"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:945
+msgid "Opt-out Helper bereitstellen"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:946
+msgid "Opt-out Link:"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:949
+msgid "Google-Analytics-Einstellungen speichern"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:961
+msgid "Pluginstatus"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:962
+msgid "Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses Plugin erfüllt und ob die eRecht24-Server erreichbar sind."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:963
+msgid "Die Daten werden nur lokal angezeigt und erst durch Klick in die Zwischenablage kopiert. API-Schlüssel und Secret sind maskiert."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:974
+msgid "Remote-Push-Test ausführen"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:978
+msgid "Log- und Systeminfos kopieren"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:989
+msgid "Shortcode-Beispiel"
+msgstr ""
+
+#. translators: %s: document label.
+#: src/Admin/Admin_Page.php:1018
+#, php-format
+msgid "%s wurde synchronisiert und die lokalen Einstellungen wurden gespeichert."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1043
+msgid "Es wurden keine zuletzt synchronisierten Texte gefunden. Bitte synchronisieren Sie diesen Rechtstext zuerst."
+msgstr ""
+
+#. translators: %s: document label.
+#: src/Admin/Admin_Page.php:1052
+#, php-format
+msgid "%s: Lokale Daten wurden mit den zuletzt synchronisierten Texten überschrieben."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1069
+msgid "eRecht24 Projekt Manager"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1070
+msgid "Lokaler Text"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1180
+msgid "Kein API-Schlüssel"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1181
+msgid "Nicht erneut geprüft"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1182
+msgid "Gültig"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1183
+msgid "Ungültig"
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1250
+msgid "WP HTTP API ist verfügbar."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1251
+msgid "WP HTTP API ist nicht verfügbar."
+msgstr ""
+
+#: src/Admin/Admin_Page.php:1257
+msgid "Push-Test nicht automatisch ausgeführt. Starte den Test über den Button im Status-Reiter."
+msgstr ""
+
+#: src/Api/Client.php:116
+msgid "Es ist kein API-Schlüssel gespeichert."
+msgstr ""
+
+#: src/Api/Client.php:124
+msgid "Der gespeicherte API-Schlüssel ist ungültig. Bitte speichere einen neuen API-Schlüssel."
+msgstr ""
+
+#: src/Api/Client.php:132
+#: src/Frontend/Shortcodes.php:98
+msgid "Der angeforderte Rechtstext-Typ ist nicht erlaubt."
+msgstr ""
+
+#: src/Api/Client.php:152
+msgid "Kein registrierter API-Client für den Push-Test vorhanden."
+msgstr ""
+
+#. translators: %s: HTTP API error message.
+#: src/Api/Client.php:230
+#, php-format
+msgid "Die Verbindung zur eRecht24-API ist fehlgeschlagen: %s"
+msgstr ""
+
+#: src/Api/Client.php:249
+msgid "Die eRecht24-API hat eine ungültige Antwort gesendet."
+msgstr ""
+
+#: src/Api/Client.php:291
+msgid "Die eRecht24-API hat den Request abgelehnt."
+msgstr ""
+
+#: src/Api/Push_Controller.php:122
+msgid "Der eRecht24-Push-Request ist nicht autorisiert."
+msgstr ""
+
+#: src/Frontend/Blocks.php:85
+msgid "Remote-Synchronisierung ist deaktiviert, bis ein gültiger eRecht24 API-Schlüssel gespeichert wurde. Lokale Rechtstexte können weiterhin ausgegeben werden."
+msgstr ""
+
+#: src/Frontend/Google_Analytics.php:70
+msgid "Google Analytics wurde für diesen Browser deaktiviert."
+msgstr ""
+
+#: src/Integrations/Elementor_Widget.php:30
+#: assets/js/block.js:111
+#: assets/js/block.js:125
+msgid "eRecht24 Rechtstext"
+msgstr ""
+
+#: src/Integrations/Elementor_Widget.php:58
+msgctxt "Elementor Widget-Tab"
+msgid "Inhalt"
+msgstr ""
+
+#: src/Integrations/Elementor_Widget.php:66
+#: assets/js/block.js:57
+msgid "Rechtstext"
+msgstr ""
+
+#: src/Integrations/Elementor_Widget.php:76
+#: assets/js/block.js:79
+msgid "Sprache"
+msgstr ""
+
+#: src/Integrations/Elementor_Widget.php:79
+#: assets/js/block.js:82
+msgid "Deutsch"
+msgstr ""
+
+#: src/Integrations/Elementor_Widget.php:80
+#: assets/js/block.js:86
+msgid "Englisch"
+msgstr ""
+
+#: src/Integrations/Elementor_Widget.php:89
+#: assets/js/block.js:97
+msgid "H1 entfernen"
+msgstr ""
+
+#: src/Plugin.php:146
+msgid "eRecht24 Legal Texts verbindet diese Website nur nach Konfiguration durch eine berechtigte Administratorin oder einen berechtigten Administrator mit dem eRecht24-Dienst."
+msgstr ""
+
+#. translators: 1: eRecht24 privacy URL.
+#: src/Plugin.php:154
+#, php-format
+msgid "Wenn der API-Schlüssel gespeichert oder Rechtstexte synchronisiert werden, werden technische Verbindungsdaten sowie die im Plugin angezeigte Push-URL an eRecht24 übertragen. Details zur Verarbeitung durch eRecht24 stehen in der <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">Datenschutzerklärung von eRecht24</a>."
+msgstr ""
+
+#: src/Plugin.php:158
+msgid "Wenn Google Analytics in den Plugin-Einstellungen aktiviert wird, lädt die Website das Google-Tag und muss dafür eine passende Einwilligungs- und Datenschutzlösung bereitstellen."
+msgstr ""
+
+#: src/Settings.php:85
+#: assets/js/block.js:60
+msgid "Impressum"
+msgstr ""
+
+#: src/Settings.php:86
+#: assets/js/block.js:64
+msgid "Datenschutzerklärung"
+msgstr ""
+
+#: src/Settings.php:87
+#: assets/js/block.js:68
+msgid "Datenschutzerklärung für Social Media"
+msgstr ""
+
+#: src/Settings.php:98
+msgid "Hinterlegen Sie hier Ihr Impressum – synchronisiert aus dem eRecht24 Projekt Manager oder als selbst gepflegter lokaler Text."
+msgstr ""
+
+#: src/Settings.php:99
+msgid "Verwalten Sie hier Ihre Datenschutzerklärung – automatisch aktuell über den eRecht24 Projekt Manager oder manuell als lokaler Text gepflegt."
+msgstr ""
+
+#: src/Settings.php:100
+msgid "Diese Datenschutzerklärung ist speziell für Ihre Social-Media-Auftritte gedacht und kann unabhängig von der allgemeinen Datenschutzerklärung ausgegeben werden."
+msgstr ""
+
+#: assets/js/admin.js:12
+msgid "API-Schlüssel wirklich entfernen?"
+msgstr ""
+
+#: assets/js/admin.js:27
+msgid "Lokale Texte wirklich mit den zuletzt synchronisierten Texten überschreiben?"
+msgstr ""
+
+#: assets/js/admin.js:50
+#: assets/js/admin.js:58
+msgid "Kopiert."
+msgstr ""

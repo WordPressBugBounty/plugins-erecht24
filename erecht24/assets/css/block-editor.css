@@ -1,0 +1,10 @@
+.erecht24-block-editor-preview {
+	border: 1px solid #dcdcde;
+	min-height: 44px;
+	padding: 12px;
+}
+
+.erecht24-block-editor-preview:focus,
+.erecht24-block-editor-preview.is-selected {
+	box-shadow: 0 0 0 1px #2271b1;
+}
