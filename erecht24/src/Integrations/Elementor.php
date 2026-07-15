@@ -37,11 +37,10 @@ final class Elementor {
 		}
 
 		add_action( 'elementor/widgets/register', array( $this, 'register_widget' ) );
-		add_action( 'elementor/widgets/widgets_registered', array( $this, 'register_widget' ) );
 	}
 
 	/**
-	 * Register widget.
+	 * Register widget(s).
 	 *
 	 * @param object $widgets_manager Elementor widgets manager.
 	 */
@@ -54,17 +53,20 @@ final class Elementor {
 			return;
 		}
 
-		$widget = new Elementor_Widget();
+		$widgets = array(
+			new Elementor_Widget(),
+			// Legacy alias for widgets placed by the pre-4.0 plugin as 'erecht24'.
+			new Elementor_Widget_Legacy(),
+		);
 
-		if ( method_exists( $widgets_manager, 'register' ) ) {
-			$widgets_manager->register( $widget );
-			$this->registered = true;
-			return;
+		foreach ( $widgets as $widget ) {
+			if ( method_exists( $widgets_manager, 'register' ) ) {
+				$widgets_manager->register( $widget );
+			} elseif ( method_exists( $widgets_manager, 'register_widget_type' ) ) {
+				$widgets_manager->register_widget_type( $widget );
+			}
 		}
 
-		if ( method_exists( $widgets_manager, 'register_widget_type' ) ) {
-			$widgets_manager->register_widget_type( $widget );
-			$this->registered = true;
-		}
+		$this->registered = true;
 	}
 }

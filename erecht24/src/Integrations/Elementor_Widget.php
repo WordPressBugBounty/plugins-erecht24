@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Elementor wrapper for the shortcode renderer.
  */
-final class Elementor_Widget extends \Elementor\Widget_Base {
+class Elementor_Widget extends \Elementor\Widget_Base {
 
 	/**
 	 * Widget id.
