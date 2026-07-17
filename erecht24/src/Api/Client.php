@@ -256,7 +256,8 @@ final class Client {
 
 		if ( 200 > $status_code || 300 <= $status_code ) {
 			$error_message = $this->get_error_message( $data );
-			$this->settings->add_log( 'API error ' . $status_code . ': ' . $error_message );
+			$api_code      = isset( $data['code'] ) && is_scalar( $data['code'] ) ? $data['code'] : null;
+			$this->settings->add_log( 'API error ' . $status_code . ' (code=' . wp_json_encode( $api_code ) . '): ' . $error_message );
 
 			if ( in_array( $status_code, array( 401, 403 ), true ) ) {
 				$this->settings->mark_api_key_invalid();
@@ -265,7 +266,10 @@ final class Client {
 			return new WP_Error(
 				'erecht24_api_error',
 				$error_message,
-				array( 'status' => $status_code )
+				array(
+					'status'   => $status_code,
+					'api_code' => $api_code,
+				)
 			);
 		}
 

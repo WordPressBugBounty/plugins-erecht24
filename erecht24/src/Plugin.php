@@ -92,6 +92,9 @@ final class Plugin {
 		$this->settings = new Settings();
 		$this->settings->migrate_from_v3();
 		$this->api_client = new Client( $this->settings );
+
+		add_action( 'init', array( $this, 'maybe_reregister_push_client' ) );
+
 		$this->shortcodes = new Shortcodes( $this->settings );
 
 		$this->shortcodes->register();
@@ -119,11 +122,62 @@ final class Plugin {
 	}
 
 	/**
+	 * Re-register the push client whenever an API key is stored without push
+	 * credentials — regardless of how that state arose (fresh v3 migration, an
+	 * already-affected install updating, or a previously failed registration
+	 * attempt). Rate-limited via transient so a persistently failing eRecht24
+	 * API doesn't retry on every single request.
+	 *
+	 * Hooked to `init` rather than called directly from `init()` (which runs on
+	 * `plugins_loaded`): register_client() calls rest_url(), which requires the
+	 * global $wp_rewrite to be set up — that happens later in WordPress's own
+	 * bootstrap, so calling it during plugins_loaded fatals with
+	 * "Call to a member function using_index_permalinks() on null".
+	 */
+	public function maybe_reregister_push_client(): void {
+		$api_key = $this->settings->get_api_key();
+
+		if ( '' === $api_key || '' !== $this->settings->get_client_secret() ) {
+			return;
+		}
+
+		if ( get_transient( 'erecht24_push_reregister_attempted' ) ) {
+			return;
+		}
+
+		set_transient( 'erecht24_push_reregister_attempted', '1', HOUR_IN_SECONDS );
+
+		try {
+			$registration = $this->api_client->register_client( $api_key );
+		} catch ( \Throwable $exception ) {
+			$this->settings->add_log( 'Automatic push client re-registration crashed: ' . $exception->getMessage() );
+			return;
+		}
+
+		if ( is_wp_error( $registration ) ) {
+			$this->settings->add_log( 'Automatic push client re-registration failed: ' . $registration->get_error_message() );
+			return;
+		}
+
+		$this->settings->add_log( 'Push client automatically re-registered after detecting a missing push secret.' );
+
+		$this->settings->save_api_connection(
+			$api_key,
+			absint( $registration['client_id'] ?? 0 ),
+			(string) ( $registration['secret'] ?? '' )
+		);
+	}
+
+	/**
 	 * Initialize plugin settings for a newly created site in the network.
 	 *
 	 * @param \WP_Site $site The newly created site.
 	 */
 	public function initialize_new_site( \WP_Site $site ): void {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
 		if ( ! is_plugin_active_for_network( ERECHT24_LEGAL_TEXT_BASENAME ) ) {
 			return;
 		}

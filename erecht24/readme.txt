@@ -4,7 +4,7 @@ Tags: legal, imprint, privacy, shortcode, gutenberg
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,9 +51,9 @@ Optionally, the plugin can output a Google Analytics tracking snippet if an admi
 
 == Installation ==
 
-1. Copy the plugin directory to `wp-content/plugins/erecht24`.
-2. Activate the plugin in WordPress.
-3. If the previous eRecht24 plugin is still active, deactivate it after a successful migration to avoid shortcode conflicts.
+1. If a previous eRecht24 plugin version (v3.x) is installed, deactivate it first, before installing or updating to this version.
+2. Copy the plugin directory to `wp-content/plugins/erecht24`.
+3. Activate the plugin in WordPress.
 4. Go to Settings > eRecht24 Legal Texts and either enter your legal texts manually, or save your eRecht24 API key to synchronise them automatically.
 5. Use the shortcode or Gutenberg block in pages, posts, or page builders.
 
@@ -91,7 +91,7 @@ Yes. On activation, known options from the previous eRecht24 plugin are read and
 
 = Can the previous eRecht24 plugin remain active at the same time? =
 
-No. Both plugins register some of the same shortcodes, in particular `[erecht24]` and `[erecht24_widget]`. After migration the previous plugin should be deactivated.
+No. Both plugins register some of the same shortcodes, in particular `[erecht24]` and `[erecht24_widget]`. Deactivate the previous plugin before installing or updating to this version, not just afterwards.
 
 == Privacy ==
 
@@ -110,6 +110,11 @@ The plugin adds a suggested privacy policy text via the WordPress privacy policy
 Complete rewrite. Settings are migrated automatically. Deactivate the previous eRecht24 plugin to avoid shortcode conflicts. Legacy shortcodes [impressum]/[datenschutz] are no longer supported — use [erecht24 type="imprint"] / [erecht24 type="privacy_policy"].
 
 == Changelog ==
+
+= 4.0.3 =
+
+* Fixed: Sites migrated from the previous eRecht24 plugin could end up with a stored API key but no registered push client.
+* Added: A persistent admin notice now warns when an API key is stored but no push client is registered, so this can be resolved by re-saving the API key.
 
 = 4.0.2 =
 
