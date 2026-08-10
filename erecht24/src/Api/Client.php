@@ -257,7 +257,10 @@ final class Client {
 		if ( 200 > $status_code || 300 <= $status_code ) {
 			$error_message = $this->get_error_message( $data );
 			$api_code      = isset( $data['code'] ) && is_scalar( $data['code'] ) ? $data['code'] : null;
-			$this->settings->add_log( 'API error ' . $status_code . ' (code=' . wp_json_encode( $api_code ) . '): ' . $error_message );
+			$this->settings->add_log(
+				'API error ' . $status_code . ' (code=' . wp_json_encode( $api_code ) . '): ' . $error_message
+				. ' | raw response: ' . wp_json_encode( self::redact_sensitive_fields( $data ) )
+			);
 
 			if ( in_array( $status_code, array( 401, 403 ), true ) ) {
 				$this->settings->mark_api_key_invalid();
@@ -271,6 +274,29 @@ final class Client {
 					'api_code' => $api_code,
 				)
 			);
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Redact known sensitive field names before an API response is logged,
+	 * in case eRecht24 ever echoes a secret/key back in an error body — this
+	 * log is exportable by the site owner via the Status tab.
+	 *
+	 * @param array<string,mixed> $data Response data.
+	 *
+	 * @return array<string,mixed>
+	 */
+	private static function redact_sensitive_fields( array $data ): array {
+		static $sensitive_keys = array( 'secret', 'api_key', 'client_secret', 'erecht24_secret', 'password', 'token' );
+
+		foreach ( $data as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$data[ $key ] = self::redact_sensitive_fields( $value );
+			} elseif ( is_string( $key ) && in_array( strtolower( $key ), $sensitive_keys, true ) ) {
+				$data[ $key ] = '(redacted)';
+			}
 		}
 
 		return $data;

@@ -168,6 +168,7 @@ final class Settings {
 			'api_key_status'   => 'missing',
 			'client_id'        => 0,
 			'client_secret'    => '',
+			'push_test_failed' => false,
 			'documents'        => $documents,
 			'google_analytics' => array(
 				'enabled'      => false,
@@ -260,6 +261,25 @@ final class Settings {
 	public function get_client_secret(): string {
 		$settings = $this->get_all();
 		return self::decrypt_value( (string) $settings['client_secret'] );
+	}
+
+	/**
+	 * Whether the last Remote Push Test failed.
+	 */
+	public function get_push_test_failed(): bool {
+		$settings = $this->get_all();
+		return ! empty( $settings['push_test_failed'] );
+	}
+
+	/**
+	 * Record the outcome of a Remote Push Test.
+	 *
+	 * @param bool $failed Whether the test failed.
+	 */
+	public function set_push_test_failed( bool $failed ): void {
+		$settings                     = $this->get_all();
+		$settings['push_test_failed'] = $failed;
+		$this->update_all( $settings );
 	}
 
 	/**
@@ -731,13 +751,11 @@ final class Settings {
 			);
 		}
 
-		$client_option = get_option( 'erecht24_api_client_settings', array() );
-		if ( is_array( $client_option ) ) {
-			$settings['client_id']     = ! empty( $client_option['client_id'] ) ? absint( $client_option['client_id'] ) : 0;
-			$settings['client_secret'] = ! empty( $client_option['secret'] )
-				? self::encrypt_value( preg_replace( '/[^a-zA-Z0-9\-_=+\/]/', '', wp_unslash( (string) $client_option['secret'] ) ) )
-				: '';
-		}
+		// Deliberately not migrating client_id/client_secret from the previous plugin: a push
+		// client registered by a different codebase (potentially with a different push_uri or
+		// push mechanism) should never be trusted as-is. Leaving these at their empty defaults
+		// means Plugin::maybe_reregister_push_client() will register a fresh, 4.x-native client
+		// automatically on the next request, with no action required from the site owner.
 
 		$legacy_map = array(
 			'imprint'                     => 'erecht24_imprint_settings',

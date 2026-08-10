@@ -63,7 +63,6 @@ final class Admin_Page {
 		add_action( 'admin_notices', array( $this, 'render_notice' ) );
 		add_action( 'admin_notices', array( $this, 'render_push_orphaned_notice' ) );
 		add_filter( 'plugin_action_links_' . ERECHT24_LEGAL_TEXT_BASENAME, array( $this, 'add_action_link' ) );
-		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_row_meta' ), 10, 2 );
 	}
 
 	/**
@@ -146,30 +145,6 @@ final class Admin_Page {
 	}
 
 	/**
-	 * Add details link in plugins table.
-	 *
-	 * @param array<int,string> $plugin_meta Existing meta links.
-	 * @param string            $plugin_file Plugin basename.
-	 *
-	 * @return array<int,string>
-	 */
-	public function add_plugin_row_meta( array $plugin_meta, string $plugin_file ): array {
-		if ( ERECHT24_LEGAL_TEXT_BASENAME !== $plugin_file ) {
-			return $plugin_meta;
-		}
-
-		$plugin_meta[] = sprintf(
-			'<a href="%1$s" class="thickbox open-plugin-details-modal" aria-label="%2$s" data-title="%3$s">%4$s</a>',
-			esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=erecht24-legal-texts&TB_iframe=true&width=772&height=640' ) ),
-			esc_attr__( 'Details zu eRecht24 Legal Texts', 'erecht24' ),
-			esc_attr__( 'eRecht24 Legal Texts', 'erecht24' ),
-			esc_html__( 'Details anzeigen', 'erecht24' )
-		);
-
-		return $plugin_meta;
-	}
-
-	/**
 	 * Render admin notices.
 	 */
 	public function render_notice(): void {
@@ -206,16 +181,29 @@ final class Admin_Page {
 			return;
 		}
 
-		if ( '' === $this->settings->get_api_key() || '' !== $this->settings->get_client_secret() ) {
+		if ( '' === $this->settings->get_api_key() ) {
 			return;
+		}
+
+		$secret_missing = '' === $this->settings->get_client_secret();
+
+		if ( ! $secret_missing && ! $this->settings->get_push_test_failed() ) {
+			return;
+		}
+
+		if ( $secret_missing ) {
+			/* translators: %s: URL to the plugin's Status tab. */
+			$message = __( 'Ein API-Schlüssel ist gespeichert, aber Push-Updates sind nicht registriert. Gehen Sie zum <a href="%s">Status-Tab</a> und klicken Sie auf „Push-Client jetzt neu registrieren".', 'erecht24' );
+		} else {
+			/* translators: %s: URL to the plugin's Status tab. */
+			$message = __( 'Ein Remote-Push-Test ist zuletzt fehlgeschlagen. Gehen Sie zum <a href="%s">Status-Tab</a> und klicken Sie auf „Push-Client jetzt neu registrieren".', 'erecht24' );
 		}
 
 		printf(
 			'<div class="notice notice-warning erecht24-prominent-notice"><p>%s</p></div>',
 			wp_kses_post(
 				sprintf(
-					/* translators: %s: URL to the plugin's Status tab. */
-					__( 'Ein API-Schlüssel ist gespeichert, aber Push-Updates sind nicht registriert. Gehen Sie zum <a href="%s">Status-Tab</a> und klicken Sie auf „Push-Client jetzt neu registrieren".', 'erecht24' ),
+					$message,
 					esc_url( $this->page_url( 'status' ) )
 				)
 			)
@@ -418,9 +406,9 @@ final class Admin_Page {
 				$this->settings->add_log( 'Remote push test: client_id unknown at eRecht24. Clearing local registration and re-registering.' );
 				$this->settings->save_api_connection( $this->settings->get_api_key(), 0, '' );
 				delete_transient( 'erecht24_push_reregister_attempted' );
-				Plugin::instance()->maybe_reregister_push_client();
+				$succeeded = Plugin::instance()->maybe_reregister_push_client();
 
-				if ( '' !== $this->settings->get_client_secret() ) {
+				if ( $succeeded ) {
 					$this->redirect_with_notice(
 						__( 'Der registrierte Client war bei eRecht24 nicht mehr bekannt (z. B. durch eine parallel installierte weitere Plugin-Version entfernt). Der Push-Client wurde automatisch neu registriert.', 'erecht24' ),
 						'success',
@@ -428,6 +416,7 @@ final class Admin_Page {
 					);
 				}
 
+				$this->settings->set_push_test_failed( true );
 				$this->redirect_with_notice(
 					__( 'Der registrierte Client war bei eRecht24 nicht mehr bekannt. Die automatische Neu-Registrierung ist fehlgeschlagen. Bitte über den Button „Push-Client jetzt neu registrieren" erneut versuchen.', 'erecht24' ),
 					'error',
@@ -435,9 +424,11 @@ final class Admin_Page {
 				);
 			}
 
+			$this->settings->set_push_test_failed( true );
 			$this->redirect_with_notice( wp_strip_all_tags( $push_response->get_error_message() ), 'error', 'status' );
 		}
 
+		$this->settings->set_push_test_failed( false );
 		$this->redirect_with_notice(
 			__( 'Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen.', 'erecht24' ),
 			'success',
@@ -458,9 +449,9 @@ final class Admin_Page {
 		check_admin_referer( 'erecht24_legal_text_force_reregister' );
 
 		delete_transient( 'erecht24_push_reregister_attempted' );
-		Plugin::instance()->maybe_reregister_push_client();
+		$succeeded = Plugin::instance()->maybe_reregister_push_client( true );
 
-		if ( '' !== $this->settings->get_client_secret() ) {
+		if ( $succeeded ) {
 			$this->redirect_with_notice( __( 'Push-Client wurde erfolgreich neu registriert.', 'erecht24' ), 'success', 'status' );
 		}
 
@@ -1053,7 +1044,7 @@ final class Admin_Page {
 			echo '</form>';
 		}
 
-		if ( '' !== $this->settings->get_api_key() && '' === $this->settings->get_client_secret() ) {
+		if ( '' !== $this->settings->get_api_key() && ( '' === $this->settings->get_client_secret() || $this->settings->get_push_test_failed() ) ) {
 			echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="erecht24-inline-form">';
 			wp_nonce_field( 'erecht24_legal_text_force_reregister' );
 			echo '<input type="hidden" name="action" value="erecht24_legal_text_force_reregister">';

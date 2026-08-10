@@ -63,6 +63,11 @@ final class Plugin {
 	}
 
 	/**
+	 * Prevent constructing the singleton from outside {@see instance()}.
+	 */
+	private function __construct() {}
+
+	/**
 	 * Prevent cloning of the singleton.
 	 */
 	private function __clone() {}
@@ -133,16 +138,28 @@ final class Plugin {
 	 * global $wp_rewrite to be set up — that happens later in WordPress's own
 	 * bootstrap, so calling it during plugins_loaded fatals with
 	 * "Call to a member function using_index_permalinks() on null".
+	 *
+	 * @param bool $force Skip the "client_secret is empty" check — used for an
+	 *                     explicit admin action re-registering a client that already
+	 *                     has *a* secret, e.g. one inherited from a v3.x migration
+	 *                     that predates this codebase's own registration, or one a
+	 *                     Remote Push Test found to be failing despite looking valid.
+	 *
+	 * @return bool True if a registration attempt was made and succeeded.
 	 */
-	public function maybe_reregister_push_client(): void {
+	public function maybe_reregister_push_client( bool $force = false ): bool {
 		$api_key = $this->settings->get_api_key();
 
-		if ( '' === $api_key || '' !== $this->settings->get_client_secret() ) {
-			return;
+		if ( '' === $api_key ) {
+			return false;
+		}
+
+		if ( ! $force && '' !== $this->settings->get_client_secret() ) {
+			return false;
 		}
 
 		if ( get_transient( 'erecht24_push_reregister_attempted' ) ) {
-			return;
+			return false;
 		}
 
 		set_transient( 'erecht24_push_reregister_attempted', '1', HOUR_IN_SECONDS );
@@ -151,21 +168,31 @@ final class Plugin {
 			$registration = $this->api_client->register_client( $api_key );
 		} catch ( \Throwable $exception ) {
 			$this->settings->add_log( 'Automatic push client re-registration crashed: ' . $exception->getMessage() );
-			return;
+			return false;
 		}
 
 		if ( is_wp_error( $registration ) ) {
 			$this->settings->add_log( 'Automatic push client re-registration failed: ' . $registration->get_error_message() );
-			return;
+			return false;
 		}
 
-		$this->settings->add_log( 'Push client automatically re-registered after detecting a missing push secret.' );
+		$secret = (string) ( $registration['secret'] ?? '' );
 
 		$this->settings->save_api_connection(
 			$api_key,
 			absint( $registration['client_id'] ?? 0 ),
-			(string) ( $registration['secret'] ?? '' )
+			$secret
 		);
+
+		if ( '' === $secret ) {
+			$this->settings->add_log( 'Push client re-registration returned no push secret.' );
+			return false;
+		}
+
+		$this->settings->add_log( 'Push client automatically re-registered after detecting a missing push secret.' );
+		$this->settings->set_push_test_failed( false );
+
+		return true;
 	}
 
 	/**
