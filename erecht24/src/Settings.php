@@ -385,7 +385,7 @@ final class Settings {
 
 		$settings           = $this->get_all();
 		$logs               = is_array( $settings['logs'] ?? null ) ? $settings['logs'] : array();
-		$settings['logs']   = array_slice( array_merge( $logs, $this->pending_logs ), -50 );
+		$settings['logs']   = array_slice( array_merge( $logs, $this->pending_logs ), -15 );
 		$this->pending_logs = array();
 		$this->update_all( $settings );
 	}

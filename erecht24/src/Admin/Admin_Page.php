@@ -429,6 +429,17 @@ final class Admin_Page {
 		}
 
 		$this->settings->set_push_test_failed( false );
+
+		$removed_duplicates = Plugin::instance()->cleanup_duplicate_clients( $this->settings->get_api_key(), $this->settings->get_client_id() );
+
+		if ( $removed_duplicates > 0 ) {
+			$this->redirect_with_notice(
+				__( 'Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen. Zusätzlich gefundene, doppelte Client-Registrierungen für diese Website wurden automatisch entfernt.', 'erecht24' ),
+				'success',
+				'status'
+			);
+		}
+
 		$this->redirect_with_notice(
 			__( 'Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen.', 'erecht24' ),
 			'success',

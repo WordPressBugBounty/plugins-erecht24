@@ -43,13 +43,24 @@ final class Client {
 	 * @return true|WP_Error
 	 */
 	public function validate_key( string $api_key ) {
-		$response = $this->request( 'GET', 'v1/clients', $api_key );
+		$response = $this->list_clients( $api_key );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
 
 		return true;
+	}
+
+	/**
+	 * List all push clients registered for this API key's project.
+	 *
+	 * @param string $api_key API key.
+	 *
+	 * @return array<int,array<string,mixed>>|WP_Error
+	 */
+	public function list_clients( string $api_key ) {
+		return $this->request( 'GET', 'v1/clients', $api_key );
 	}
 
 	/**

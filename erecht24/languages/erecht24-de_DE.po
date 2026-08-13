@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: eRecht24 Legal Texts 4.0.4\n"
+"Project-Id-Version: eRecht24 Legal Texts 4.0.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/erecht24-legal-"
 "texts\n"
-"POT-Creation-Date: 2026-08-10T07:44:52+00:00\n"
+"POT-Creation-Date: 2026-08-13T06:57:34+00:00\n"
 "PO-Revision-Date: 2026-06-25 00:00+0200\n"
 "Last-Translator: eRecht24 <zander@erecht24.de>\n"
 "Language-Team: German <zander@erecht24.de>\n"
@@ -87,7 +87,7 @@ msgstr ""
 "Gutenberg-Block ausgeben."
 
 #: src/Admin/Admin_Page.php:252 src/Admin/Admin_Page.php:333
-#: src/Admin/Admin_Page.php:386 src/Admin/Admin_Page.php:447
+#: src/Admin/Admin_Page.php:386 src/Admin/Admin_Page.php:457
 msgid "Sie haben keine Berechtigung für diese Aktion."
 msgstr "Sie haben keine Berechtigung für diese Aktion."
 
@@ -139,12 +139,12 @@ msgstr "Einige Rechtstexte konnten nicht synchronisiert werden:"
 msgid "Synchronisiert: %s"
 msgstr "Synchronisiert: %s"
 
-#: src/Admin/Admin_Page.php:378 src/Admin/Admin_Page.php:1083
-#: src/Admin/Admin_Page.php:1115
+#: src/Admin/Admin_Page.php:378 src/Admin/Admin_Page.php:1092
+#: src/Admin/Admin_Page.php:1124
 msgid "Es wurde kein gültiger Rechtstext-Typ übergeben."
 msgstr "Es wurde kein gültiger Rechtstext-Typ übergeben."
 
-#: src/Admin/Admin_Page.php:393 src/Admin/Admin_Page.php:1333
+#: src/Admin/Admin_Page.php:393 src/Admin/Admin_Page.php:1342
 msgid ""
 "Push-Test übersprungen: kein gültiger API-Schlüssel oder kein registrierter "
 "Client."
@@ -152,7 +152,7 @@ msgstr ""
 "Push-Test übersprungen: kein gültiger API-Schlüssel oder kein registrierter "
 "Client."
 
-#: src/Admin/Admin_Page.php:414
+#: src/Admin/Admin_Page.php:413
 msgid ""
 "Der registrierte Client war bei eRecht24 nicht mehr bekannt (z. B. durch "
 "eine parallel installierte weitere Plugin-Version entfernt). Der Push-Client "
@@ -162,7 +162,7 @@ msgstr ""
 "eine parallel installierte weitere Plugin-Version entfernt). Der Push-Client "
 "wurde automatisch neu registriert."
 
-#: src/Admin/Admin_Page.php:422
+#: src/Admin/Admin_Page.php:421
 msgid ""
 "Der registrierte Client war bei eRecht24 nicht mehr bekannt. Die "
 "automatische Neu-Registrierung ist fehlgeschlagen. Bitte über den Button "
@@ -172,15 +172,25 @@ msgstr ""
 "automatische Neu-Registrierung ist fehlgeschlagen. Bitte über den Button "
 "„Push-Client jetzt neu registrieren\" erneut versuchen."
 
-#: src/Admin/Admin_Page.php:434
+#: src/Admin/Admin_Page.php:437
+msgid ""
+"Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen. Zusätzlich "
+"gefundene, doppelte Client-Registrierungen für diese Website wurden "
+"automatisch entfernt."
+msgstr ""
+"Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen. Zusätzlich "
+"gefundene, doppelte Client-Registrierungen für diese Website wurden "
+"automatisch entfernt."
+
+#: src/Admin/Admin_Page.php:444
 msgid "Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen."
 msgstr "Der eRecht24 Server kann den WordPress-Push-Endpoint erreichen."
 
-#: src/Admin/Admin_Page.php:457
+#: src/Admin/Admin_Page.php:466
 msgid "Push-Client wurde erfolgreich neu registriert."
 msgstr "Push-Client wurde erfolgreich neu registriert."
 
-#: src/Admin/Admin_Page.php:461
+#: src/Admin/Admin_Page.php:470
 msgid ""
 "Die Neu-Registrierung ist fehlgeschlagen. Details siehe Log im Status-"
 "Bereich."
@@ -188,24 +198,24 @@ msgstr ""
 "Die Neu-Registrierung ist fehlgeschlagen. Details siehe Log im Status-"
 "Bereich."
 
-#: src/Admin/Admin_Page.php:475 src/Admin/Admin_Page.php:526
-#: src/Admin/Admin_Page.php:535
+#: src/Admin/Admin_Page.php:484 src/Admin/Admin_Page.php:535
+#: src/Admin/Admin_Page.php:544
 msgid "API-Schlüssel"
 msgstr "API-Schlüssel"
 
-#: src/Admin/Admin_Page.php:488 src/Admin/Admin_Page.php:1002
+#: src/Admin/Admin_Page.php:497 src/Admin/Admin_Page.php:1011
 msgid "Google Analytics"
 msgstr "Google Analytics"
 
-#: src/Admin/Admin_Page.php:492 src/Admin/Admin_Page.php:556
+#: src/Admin/Admin_Page.php:501 src/Admin/Admin_Page.php:565
 msgid "Status"
 msgstr "Status"
 
-#: src/Admin/Admin_Page.php:496 src/Admin/Admin_Page.php:696
+#: src/Admin/Admin_Page.php:505 src/Admin/Admin_Page.php:705
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: src/Admin/Admin_Page.php:527
+#: src/Admin/Admin_Page.php:536
 msgid ""
 "Externe API-Requests werden nur durch Speichern des API-Schlüssels, manuelle "
 "Synchronisierung oder einen autorisierten eRecht24-Push ausgelöst."
@@ -213,24 +223,24 @@ msgstr ""
 "Externe API-Requests werden nur durch Speichern des API-Schlüssels, manuelle "
 "Synchronisierung oder einen autorisierten eRecht24-Push ausgelöst."
 
-#: src/Admin/Admin_Page.php:538
+#: src/Admin/Admin_Page.php:547
 msgid "Gespeicherter API-Schlüssel unverändert"
 msgstr "Gespeicherter API-Schlüssel unverändert"
 
-#: src/Admin/Admin_Page.php:538
+#: src/Admin/Admin_Page.php:547
 msgid "API-Schlüssel eintragen"
 msgstr "API-Schlüssel eintragen"
 
-#: src/Admin/Admin_Page.php:542
+#: src/Admin/Admin_Page.php:551
 msgid "Gespeichert:"
 msgstr "Gespeichert:"
 
-#: src/Admin/Admin_Page.php:544
+#: src/Admin/Admin_Page.php:553
 msgid "API-Schlüssel entfernen"
 msgstr "API-Schlüssel entfernen"
 
 #. translators: %s: eRecht24 project manager URL.
-#: src/Admin/Admin_Page.php:549
+#: src/Admin/Admin_Page.php:558
 #, php-format
 msgid ""
 "Geben Sie hier Ihren API-Schlüssel ein, welchen Sie für Ihre Website im <a "
@@ -241,7 +251,7 @@ msgstr ""
 "href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">eRecht24 Projekt "
 "Manager für Websites</a> erzeugt haben."
 
-#: src/Admin/Admin_Page.php:559
+#: src/Admin/Admin_Page.php:568
 msgid ""
 "Remote-Synchronisierung ist deaktiviert, bis ein gültiger API-Schlüssel "
 "gespeichert wurde. Bereits gespeicherte Rechtstexte werden weiterhin "
@@ -251,15 +261,15 @@ msgstr ""
 "gespeichert wurde. Bereits gespeicherte Rechtstexte werden weiterhin "
 "ausgegeben."
 
-#: src/Admin/Admin_Page.php:562
+#: src/Admin/Admin_Page.php:571
 msgid "Push-Endpoint"
 msgstr "Push-Endpoint"
 
-#: src/Admin/Admin_Page.php:564
+#: src/Admin/Admin_Page.php:573
 msgid "Push-Updates sind registriert."
 msgstr "Push-Updates sind registriert."
 
-#: src/Admin/Admin_Page.php:564
+#: src/Admin/Admin_Page.php:573
 msgid ""
 "Push-Updates sind nicht registriert. Manuelle Synchronisierung ist davon "
 "unabhängig."
@@ -267,23 +277,23 @@ msgstr ""
 "Push-Updates sind nicht registriert. Manuelle Synchronisierung ist davon "
 "unabhängig."
 
-#: src/Admin/Admin_Page.php:566
+#: src/Admin/Admin_Page.php:575
 msgid "Client-ID:"
 msgstr "Client-ID:"
 
-#: src/Admin/Admin_Page.php:575
+#: src/Admin/Admin_Page.php:584
 msgid "API-Einstellungen speichern"
 msgstr "API-Einstellungen speichern"
 
-#: src/Admin/Admin_Page.php:585
+#: src/Admin/Admin_Page.php:594
 msgid "Alle Rechtstexte synchronisieren"
 msgstr "Alle Rechtstexte synchronisieren"
 
-#: src/Admin/Admin_Page.php:611
+#: src/Admin/Admin_Page.php:620
 msgid "Unbekannter Rechtstext."
 msgstr "Unbekannter Rechtstext."
 
-#: src/Admin/Admin_Page.php:624
+#: src/Admin/Admin_Page.php:633
 msgid ""
 "Kein gültiger API-Schlüssel aktiv. Remote-Synchronisierung ist deaktiviert. "
 "Bereits synchronisierte und lokale Rechtstexte werden weiterhin ausgegeben."
@@ -291,60 +301,60 @@ msgstr ""
 "Kein gültiger API-Schlüssel aktiv. Remote-Synchronisierung ist deaktiviert. "
 "Bereits synchronisierte und lokale Rechtstexte werden weiterhin ausgegeben."
 
-#: src/Admin/Admin_Page.php:633
+#: src/Admin/Admin_Page.php:642
 msgid "Datenquelle"
 msgstr "Datenquelle"
 
-#: src/Admin/Admin_Page.php:637
+#: src/Admin/Admin_Page.php:646
 msgid "HTML-Code (DE)"
 msgstr "HTML-Code (DE)"
 
-#: src/Admin/Admin_Page.php:638
+#: src/Admin/Admin_Page.php:647
 msgid "HTML-Code (EN)"
 msgstr "HTML-Code (EN)"
 
-#: src/Admin/Admin_Page.php:639
+#: src/Admin/Admin_Page.php:648
 msgid "Lokales HTML (DE)"
 msgstr "Lokales HTML (DE)"
 
-#: src/Admin/Admin_Page.php:640
+#: src/Admin/Admin_Page.php:649
 msgid "Lokales HTML (EN)"
 msgstr "Lokales HTML (EN)"
 
-#: src/Admin/Admin_Page.php:642
+#: src/Admin/Admin_Page.php:651
 msgid "Letzte Änderung im eRecht24 Projekt Manager"
 msgstr "Letzte Änderung im eRecht24 Projekt Manager"
 
-#: src/Admin/Admin_Page.php:643
+#: src/Admin/Admin_Page.php:652
 msgid "Letzte lokale Änderung"
 msgstr "Letzte lokale Änderung"
 
-#: src/Admin/Admin_Page.php:647
+#: src/Admin/Admin_Page.php:656
 msgid "Rechtstext-Einstellungen speichern"
 msgstr "Rechtstext-Einstellungen speichern"
 
-#: src/Admin/Admin_Page.php:653
+#: src/Admin/Admin_Page.php:662
 msgid "Diesen Rechtstext synchronisieren und speichern"
 msgstr "Diesen Rechtstext synchronisieren und speichern"
 
-#: src/Admin/Admin_Page.php:660
+#: src/Admin/Admin_Page.php:669
 msgid "Lokale Daten mit den zuletzt synchronisierten Texten überschreiben"
 msgstr "Lokale Daten mit den zuletzt synchronisierten Texten überschreiben"
 
-#: src/Admin/Admin_Page.php:679
+#: src/Admin/Admin_Page.php:688
 msgid "Seitennavigation"
 msgstr "Seitennavigation"
 
-#: src/Admin/Admin_Page.php:680
+#: src/Admin/Admin_Page.php:689
 msgctxt "Überschrift des Inhaltsverzeichnisses in der Hilfe"
 msgid "Inhalt"
 msgstr "Inhalt"
 
-#: src/Admin/Admin_Page.php:697
+#: src/Admin/Admin_Page.php:706
 msgid "Die Hilfedatei konnte nicht geladen werden."
 msgstr "Die Hilfedatei konnte nicht geladen werden."
 
-#: src/Admin/Admin_Page.php:1003
+#: src/Admin/Admin_Page.php:1012
 msgid ""
 "Sie können den vollständigen Google Analytics Tracking-Code inkl. "
 "Codesnippet für das Setzen des Opt-Out-Cookies auch über dieses Plugin "
@@ -354,7 +364,7 @@ msgstr ""
 "Codesnippet für das Setzen des Opt-Out-Cookies auch über dieses Plugin "
 "generieren lassen."
 
-#: src/Admin/Admin_Page.php:1004
+#: src/Admin/Admin_Page.php:1013
 msgid ""
 "Google Analytics ist standardmäßig deaktiviert. Aktiviere es nur, wenn deine "
 "Website die notwendige Einwilligung einholt."
@@ -362,39 +372,39 @@ msgstr ""
 "Google Analytics ist standardmäßig deaktiviert. Aktiviere es nur, wenn deine "
 "Website die notwendige Einwilligung einholt."
 
-#: src/Admin/Admin_Page.php:1010
+#: src/Admin/Admin_Page.php:1019
 msgid "Measurement-ID"
 msgstr "Measurement-ID"
 
-#: src/Admin/Admin_Page.php:1013
+#: src/Admin/Admin_Page.php:1022
 msgid "Optionen"
 msgstr "Optionen"
 
-#: src/Admin/Admin_Page.php:1014
+#: src/Admin/Admin_Page.php:1023
 msgid "Google Analytics Code ausgeben"
 msgstr "Google Analytics Code ausgeben"
 
-#: src/Admin/Admin_Page.php:1015
+#: src/Admin/Admin_Page.php:1024
 msgid "Usercentrics-kompatibel als deaktiviertes Script ausgeben"
 msgstr "Usercentrics-kompatibel als deaktiviertes Script ausgeben"
 
-#: src/Admin/Admin_Page.php:1016
+#: src/Admin/Admin_Page.php:1025
 msgid "Opt-out Helper bereitstellen"
 msgstr "Opt-out Helper bereitstellen"
 
-#: src/Admin/Admin_Page.php:1017
+#: src/Admin/Admin_Page.php:1026
 msgid "Opt-out Link:"
 msgstr "Opt-out Link:"
 
-#: src/Admin/Admin_Page.php:1020
+#: src/Admin/Admin_Page.php:1029
 msgid "Google-Analytics-Einstellungen speichern"
 msgstr "Google-Analytics-Einstellungen speichern"
 
-#: src/Admin/Admin_Page.php:1032
+#: src/Admin/Admin_Page.php:1041
 msgid "Pluginstatus"
 msgstr "Pluginstatus"
 
-#: src/Admin/Admin_Page.php:1033
+#: src/Admin/Admin_Page.php:1042
 msgid ""
 "Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses "
 "Plugin erfüllt und ob die eRecht24-Server erreichbar sind."
@@ -402,7 +412,7 @@ msgstr ""
 "Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses "
 "Plugin erfüllt und ob die eRecht24-Server erreichbar sind."
 
-#: src/Admin/Admin_Page.php:1034
+#: src/Admin/Admin_Page.php:1043
 msgid ""
 "Die Daten werden nur lokal angezeigt und erst durch Klick in die "
 "Zwischenablage kopiert. API-Schlüssel und Secret sind maskiert."
@@ -410,31 +420,31 @@ msgstr ""
 "Die Daten werden nur lokal angezeigt und erst durch Klick in die "
 "Zwischenablage kopiert. API-Schlüssel und Secret sind maskiert."
 
-#: src/Admin/Admin_Page.php:1045
+#: src/Admin/Admin_Page.php:1054
 msgid "Remote-Push-Test ausführen"
 msgstr "Remote-Push-Test ausführen"
 
-#: src/Admin/Admin_Page.php:1053
+#: src/Admin/Admin_Page.php:1062
 msgid "Push-Client jetzt neu registrieren"
 msgstr "Push-Client jetzt neu registrieren"
 
-#: src/Admin/Admin_Page.php:1057
+#: src/Admin/Admin_Page.php:1066
 msgid "Log- und Systeminfos kopieren"
 msgstr "Log- und Systeminfos kopieren"
 
-#: src/Admin/Admin_Page.php:1068
+#: src/Admin/Admin_Page.php:1077
 msgid "Shortcode-Beispiel"
 msgstr "Shortcode-Beispiel"
 
 #. translators: %s: document label.
-#: src/Admin/Admin_Page.php:1097
+#: src/Admin/Admin_Page.php:1106
 #, php-format
 msgid ""
 "%s wurde synchronisiert und die lokalen Einstellungen wurden gespeichert."
 msgstr ""
 "%s wurde synchronisiert und die lokalen Einstellungen wurden gespeichert."
 
-#: src/Admin/Admin_Page.php:1122
+#: src/Admin/Admin_Page.php:1131
 msgid ""
 "Es wurden keine zuletzt synchronisierten Texte gefunden. Bitte "
 "synchronisieren Sie diesen Rechtstext zuerst."
@@ -443,7 +453,7 @@ msgstr ""
 "synchronisieren Sie diesen Rechtstext zuerst."
 
 #. translators: %s: document label.
-#: src/Admin/Admin_Page.php:1131
+#: src/Admin/Admin_Page.php:1140
 #, php-format
 msgid ""
 "%s: Lokale Daten wurden mit den zuletzt synchronisierten Texten "
@@ -452,39 +462,39 @@ msgstr ""
 "%s: Lokale Daten wurden mit den zuletzt synchronisierten Texten "
 "überschrieben."
 
-#: src/Admin/Admin_Page.php:1148
+#: src/Admin/Admin_Page.php:1157
 msgid "eRecht24 Projekt Manager"
 msgstr "eRecht24 Projekt Manager"
 
-#: src/Admin/Admin_Page.php:1149
+#: src/Admin/Admin_Page.php:1158
 msgid "Lokaler Text"
 msgstr "Lokaler Text"
 
-#: src/Admin/Admin_Page.php:1259
+#: src/Admin/Admin_Page.php:1268
 msgid "Kein API-Schlüssel"
 msgstr "Kein API-Schlüssel"
 
-#: src/Admin/Admin_Page.php:1260
+#: src/Admin/Admin_Page.php:1269
 msgid "Nicht erneut geprüft"
 msgstr "Nicht erneut geprüft"
 
-#: src/Admin/Admin_Page.php:1261
+#: src/Admin/Admin_Page.php:1270
 msgid "Gültig"
 msgstr "Gültig"
 
-#: src/Admin/Admin_Page.php:1262
+#: src/Admin/Admin_Page.php:1271
 msgid "Ungültig"
 msgstr "Ungültig"
 
-#: src/Admin/Admin_Page.php:1329
+#: src/Admin/Admin_Page.php:1338
 msgid "WP HTTP API ist verfügbar."
 msgstr "WP HTTP API ist verfügbar."
 
-#: src/Admin/Admin_Page.php:1330
+#: src/Admin/Admin_Page.php:1339
 msgid "WP HTTP API ist nicht verfügbar."
 msgstr "WP HTTP API ist nicht verfügbar."
 
-#: src/Admin/Admin_Page.php:1336
+#: src/Admin/Admin_Page.php:1345
 msgid ""
 "Push-Test nicht automatisch ausgeführt. Starte den Test über den Button im "
 "Status-Reiter."
@@ -492,11 +502,11 @@ msgstr ""
 "Push-Test nicht automatisch ausgeführt. Starte den Test über den Button im "
 "Status-Reiter."
 
-#: src/Api/Client.php:116
+#: src/Api/Client.php:127
 msgid "Es ist kein API-Schlüssel gespeichert."
 msgstr "Es ist kein API-Schlüssel gespeichert."
 
-#: src/Api/Client.php:124
+#: src/Api/Client.php:135
 msgid ""
 "Der gespeicherte API-Schlüssel ist ungültig. Bitte speichere einen neuen API-"
 "Schlüssel."
@@ -504,25 +514,25 @@ msgstr ""
 "Der gespeicherte API-Schlüssel ist ungültig. Bitte speichere einen neuen API-"
 "Schlüssel."
 
-#: src/Api/Client.php:132 src/Frontend/Shortcodes.php:68
+#: src/Api/Client.php:143 src/Frontend/Shortcodes.php:68
 msgid "Der angeforderte Rechtstext-Typ ist nicht erlaubt."
 msgstr "Der angeforderte Rechtstext-Typ ist nicht erlaubt."
 
-#: src/Api/Client.php:152
+#: src/Api/Client.php:163
 msgid "Kein registrierter API-Client für den Push-Test vorhanden."
 msgstr "Kein registrierter API-Client für den Push-Test vorhanden."
 
 #. translators: %s: HTTP API error message.
-#: src/Api/Client.php:230
+#: src/Api/Client.php:241
 #, php-format
 msgid "Die Verbindung zur eRecht24-API ist fehlgeschlagen: %s"
 msgstr "Die Verbindung zur eRecht24-API ist fehlgeschlagen: %s"
 
-#: src/Api/Client.php:249
+#: src/Api/Client.php:260
 msgid "Die eRecht24-API hat eine ungültige Antwort gesendet."
 msgstr "Die eRecht24-API hat eine ungültige Antwort gesendet."
 
-#: src/Api/Client.php:298
+#: src/Api/Client.php:332
 msgid "Die eRecht24-API hat den Request abgelehnt."
 msgstr "Die eRecht24-API hat den Request abgelehnt."
 
@@ -574,7 +584,7 @@ msgstr "Englisch"
 msgid "H1 entfernen"
 msgstr "H1 entfernen"
 
-#: src/Plugin.php:212
+#: src/Plugin.php:296
 msgid ""
 "eRecht24 Legal Texts verbindet diese Website nur nach Konfiguration durch "
 "eine berechtigte Administratorin oder einen berechtigten Administrator mit "
@@ -585,7 +595,7 @@ msgstr ""
 "dem eRecht24-Dienst."
 
 #. translators: 1: eRecht24 privacy URL.
-#: src/Plugin.php:220
+#: src/Plugin.php:304
 #, php-format
 msgid ""
 "Wenn der API-Schlüssel gespeichert oder Rechtstexte synchronisiert werden, "
@@ -600,7 +610,7 @@ msgstr ""
 "der <a href=\"%1$s\" target=\"_blank\" rel=\"noopener "
 "noreferrer\">Datenschutzerklärung von eRecht24</a>."
 
-#: src/Plugin.php:224
+#: src/Plugin.php:308
 msgid ""
 "Wenn Google Analytics in den Plugin-Einstellungen aktiviert wird, lädt die "
 "Website das Google-Tag und muss dafür eine passende Einwilligungs- und "

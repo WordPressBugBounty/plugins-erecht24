@@ -176,23 +176,94 @@ final class Plugin {
 			return false;
 		}
 
-		$secret = (string) ( $registration['secret'] ?? '' );
+		$secret    = (string) ( $registration['secret'] ?? '' );
+		$client_id = absint( $registration['client_id'] ?? 0 );
 
-		$this->settings->save_api_connection(
-			$api_key,
-			absint( $registration['client_id'] ?? 0 ),
-			$secret
-		);
+		$this->settings->save_api_connection( $api_key, $client_id, $secret );
 
-		if ( '' === $secret ) {
-			$this->settings->add_log( 'Push client re-registration returned no push secret.' );
+		if ( '' === $secret || 0 === $client_id ) {
+			$this->settings->add_log( 'Push client re-registration returned an incomplete response (missing secret or client_id).' );
 			return false;
 		}
 
 		$this->settings->add_log( 'Push client automatically re-registered after detecting a missing push secret.' );
 		$this->settings->set_push_test_failed( false );
 
+		$this->cleanup_duplicate_clients( $api_key, $client_id );
+
 		return true;
+	}
+
+	/**
+	 * Delete any other push clients at eRecht24 that share this site's push_uri
+	 * (e.g. one left over from the previous v3.x plugin, or one created by an
+	 * earlier failed repair attempt). Having more than one client registered
+	 * for the same push_uri is a real problem, not just clutter: eRecht24 may
+	 * push to any of them, and an old client can have a stale `push_method`
+	 * (e.g. GET from the v3.x plugin) that this route no longer accepts,
+	 * producing a genuine `rest_no_route` failure that has nothing to do with
+	 * the current, correctly registered client.
+	 *
+	 * @param string $api_key           API key.
+	 * @param int    $current_client_id The client id to keep — never deleted.
+	 *
+	 * @return int Number of duplicate clients actually deleted.
+	 */
+	public function cleanup_duplicate_clients( string $api_key, int $current_client_id ): int {
+		if ( 1 > $current_client_id ) {
+			// Without a valid id of our own there is no safe exclusion criterion —
+			// never delete anything rather than risk removing a legitimate client.
+			$this->settings->add_log( 'Duplicate push client cleanup skipped: no valid current client id to keep.' );
+			return 0;
+		}
+
+		try {
+			$clients = $this->api_client->list_clients( $api_key );
+		} catch ( \Throwable $exception ) {
+			$this->settings->add_log( 'Duplicate push client cleanup crashed while listing clients: ' . $exception->getMessage() );
+			return 0;
+		}
+
+		if ( is_wp_error( $clients ) || ! is_array( $clients ) ) {
+			return 0;
+		}
+
+		$removed = 0;
+
+		$push_uri = rest_url( 'erecht24/v1/push' );
+
+		foreach ( $clients as $client ) {
+			if ( ! is_array( $client ) ) {
+				continue;
+			}
+
+			$client_id = absint( $client['client_id'] ?? 0 );
+
+			if ( 0 === $client_id || $current_client_id === $client_id ) {
+				continue;
+			}
+
+			if ( ( $client['push_uri'] ?? '' ) !== $push_uri ) {
+				continue;
+			}
+
+			try {
+				$deleted = $this->api_client->delete_client( $api_key, $client_id );
+			} catch ( \Throwable $exception ) {
+				$this->settings->add_log( 'Duplicate push client cleanup crashed deleting client ' . $client_id . ': ' . $exception->getMessage() );
+				continue;
+			}
+
+			if ( is_wp_error( $deleted ) ) {
+				$this->settings->add_log( 'Duplicate push client cleanup failed for client ' . $client_id . ': ' . $deleted->get_error_message() );
+				continue;
+			}
+
+			$this->settings->add_log( 'Duplicate push client (id ' . $client_id . ', same push_uri) deleted at eRecht24.' );
+			++$removed;
+		}
+
+		return $removed;
 	}
 
 	/**
