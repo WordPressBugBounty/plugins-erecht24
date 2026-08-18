@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Help documentation content.
  *
  * @package ERecht24LegalText
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 return <<<'MARKDOWN'
 Anleitung zum eRecht24 Rechtstexte Plugin

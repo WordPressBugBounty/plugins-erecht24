@@ -5,6 +5,7 @@
     var __ = i18n.__;
     var InspectorControls = blockEditor.InspectorControls;
     var useBlockProps = blockEditor.useBlockProps;
+    var PanelBody = components.PanelBody;
     var SelectControl = components.SelectControl;
     var ToggleControl = components.ToggleControl;
     var Notice = components.Notice;
@@ -53,55 +54,71 @@
                     InspectorControls, {
                         key: 'inspector'
                     },
-                    el(SelectControl, {
-                        label: __('Rechtstext', 'erecht24'),
-                        value: attributes.type,
-                        options: [{
-                                label: __('Impressum', 'erecht24'),
-                                value: 'imprint'
+                    el(
+                        PanelBody, {
+                            title: __('Einstellungen', 'erecht24'),
+                            initialOpen: true
+                        },
+                        el(
+                            'div', {
+                                className: 'erecht24-block-inspector-stack'
                             },
-                            {
-                                label: __('Datenschutzerklärung', 'erecht24'),
-                                value: 'privacy_policy'
-                            },
-                            {
-                                label: __('Datenschutzerklärung für Social Media', 'erecht24'),
-                                value: 'privacy_policy_social_media'
-                            }
-                        ],
-                        onChange: function(value) {
-                            props.setAttributes({
-                                type: value
-                            });
-                        }
-                    }),
-                    el(SelectControl, {
-                        label: __('Sprache', 'erecht24'),
-                        value: attributes.lang,
-                        options: [{
-                                label: __('Deutsch', 'erecht24'),
-                                value: 'de'
-                            },
-                            {
-                                label: __('Englisch', 'erecht24'),
-                                value: 'en'
-                            }
-                        ],
-                        onChange: function(value) {
-                            props.setAttributes({
-                                lang: value
-                            });
-                        }
-                    }),
-                    el(ToggleControl, {
-                        label: __('H1 entfernen', 'erecht24'),
-                        checked: attributes.strip_title,
-                        onChange: function(value) {
-                            props.setAttributes({
-                                strip_title: value
-                            });
-                        }
-                    })
+                            el(SelectControl, {
+                                __nextHasNoMarginBottom: true,
+                                __next40pxDefaultSize: true,
+                                label: __('Rechtstext', 'erecht24'),
+                                value: attributes.type,
+                                options: [{
+                                        label: __('Impressum', 'erecht24'),
+                                        value: 'imprint'
+                                    },
+                                    {
+                                        label: __('Datenschutzerklärung', 'erecht24'),
+                                        value: 'privacy_policy'
+                                    },
+                                    {
+                                        label: __('Datenschutzerklärung für Social Media', 'erecht24'),
+                                        value: 'privacy_policy_social_media'
+                                    }
+                                ],
+                                onChange: function(value) {
+                                    props.setAttributes({
+                                        type: value
+                                    });
+                                }
+                            }),
+                            el(SelectControl, {
+                                __nextHasNoMarginBottom: true,
+                                __next40pxDefaultSize: true,
+                                label: __('Sprache', 'erecht24'),
+                                value: attributes.lang,
+                                options: [{
+                                        label: __('Deutsch', 'erecht24'),
+                                        value: 'de'
+                                    },
+                                    {
+                                        label: __('Englisch', 'erecht24'),
+                                        value: 'en'
+                                    }
+                                ],
+                                onChange: function(value) {
+                                    props.setAttributes({
+                                        lang: value
+                                    });
+                                }
+                            }),
+                            el(ToggleControl, {
+                                __nextHasNoMarginBottom: true,
+                                label: __('H1 entfernen', 'erecht24'),
+                                checked: attributes.strip_title,
+                                onChange: function(value) {
+                                    props.setAttributes({
+                                        strip_title: value
+                                    });
+                                }
+                            })
+                        )
+                    )
                 )
             ];
         };

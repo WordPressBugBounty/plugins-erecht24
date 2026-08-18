@@ -65,7 +65,12 @@ $erecht24_delete_registered_client = static function () use ( $erecht24_option_n
 };
 
 if ( is_multisite() ) {
-	$erecht24_sites = get_sites( array( 'fields' => 'ids' ) );
+	$erecht24_sites = get_sites(
+		array(
+			'fields' => 'ids',
+			'number' => 0,
+		)
+	);
 
 	foreach ( $erecht24_sites as $erecht24_site_id ) {
 		switch_to_blog( (int) $erecht24_site_id );

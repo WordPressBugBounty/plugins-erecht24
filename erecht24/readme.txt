@@ -2,9 +2,9 @@
 Contributors: erecht24, zandererecht24
 Tags: legal, imprint, privacy, shortcode, gutenberg
 Requires at least: 6.3
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 4.0.5
+Stable tag: 4.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,6 +110,14 @@ The plugin adds a suggested privacy policy text via the WordPress privacy policy
 Complete rewrite. Settings are migrated automatically. Deactivate the previous eRecht24 plugin to avoid shortcode conflicts. Legacy shortcodes [impressum]/[datenschutz] are no longer supported — use [erecht24 type="imprint"] / [erecht24 type="privacy_policy"].
 
 == Changelog ==
+
+= 4.1.0 =
+
+* Changed: The Gutenberg block is now registered via block.json metadata files (Block API v3), including full support for the iframed block editor introduced in WordPress 7.1. If the metadata files are missing, the plugin falls back to the previous array-based registration.
+* Improved: The block inspector controls are now grouped in a standard settings panel with correct padding and spacing, and use the current WordPress component styles (no more deprecation warnings in the editor console).
+* Backwards compatible: saved content, block attributes, the legacy block name `erecht24/erecht24`, shortcodes, and all script handles are unchanged. Existing pages continue to work without any migration.
+* Fixed: The Elementor widget kept by the pre-4.0 plugin's legacy name showed up as a duplicate entry in the "Add Widget" panel. It is now hidden from the panel; existing pages using it keep rendering and remain editable.
+* Fixed: A few labels in the Status tab's system information table (e.g. "API-Key-Status") were hardcoded and not translatable. All labels are now translatable, without changing the machine-readable field names in the copyable debug export.
 
 = 4.0.5 =
 

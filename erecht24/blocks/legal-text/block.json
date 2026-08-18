@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "erecht24/legal-text",
+	"title": "eRecht24 Rechtstext",
+	"category": "widgets",
+	"icon": "universal-access-alt",
+	"description": "Gibt einen eRecht24 Rechtstext (Impressum, Datenschutzerklärung) aus.",
+	"keywords": [ "impressum", "datenschutz", "rechtstext", "erecht24" ],
+	"textdomain": "erecht24",
+	"attributes": {
+		"type": {
+			"type": "string",
+			"default": "imprint"
+		},
+		"lang": {
+			"type": "string",
+			"default": "de"
+		},
+		"strip_title": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "erecht24-legal-texts-block",
+	"editorStyle": "erecht24-legal-texts-block-editor"
+}

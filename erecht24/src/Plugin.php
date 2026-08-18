@@ -98,7 +98,12 @@ final class Plugin {
 		$this->settings->migrate_from_v3();
 		$this->api_client = new Client( $this->settings );
 
-		add_action( 'init', array( $this, 'maybe_reregister_push_client' ) );
+		add_action(
+			'init',
+			function (): void {
+				$this->maybe_reregister_push_client();
+			}
+		);
 
 		$this->shortcodes = new Shortcodes( $this->settings );
 

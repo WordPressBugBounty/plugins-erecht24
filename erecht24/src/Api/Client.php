@@ -201,7 +201,7 @@ final class Client {
 	 * @param string                   $api_key API key.
 	 * @param array<string,mixed>|null $body Optional JSON body.
 	 *
-	 * @return array<string,mixed>|WP_Error
+	 * @return array<int|string,mixed>|WP_Error
 	 */
 	private function request( string $method, string $path, string $api_key, ?array $body = null ) {
 		$url     = esc_url_raw( self::API_BASE . '/' . ltrim( $path, '/' ) );
@@ -268,9 +268,10 @@ final class Client {
 		if ( 200 > $status_code || 300 <= $status_code ) {
 			$error_message = $this->get_error_message( $data );
 			$api_code      = isset( $data['code'] ) && is_scalar( $data['code'] ) ? $data['code'] : null;
+			$known_secrets = array( $api_key, $this->settings->get_client_secret() );
 			$this->settings->add_log(
-				'API error ' . $status_code . ' (code=' . wp_json_encode( $api_code ) . '): ' . $error_message
-				. ' | raw response: ' . wp_json_encode( self::redact_sensitive_fields( $data ) )
+				'API error ' . $status_code . ' (code=' . wp_json_encode( $api_code, JSON_UNESCAPED_UNICODE ) . '): ' . $error_message
+				. ' | raw response: ' . wp_json_encode( $this->redact_sensitive_fields( $data, $known_secrets ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES )
 			);
 
 			if ( in_array( $status_code, array( 401, 403 ), true ) ) {
@@ -291,22 +292,35 @@ final class Client {
 	}
 
 	/**
-	 * Redact known sensitive field names before an API response is logged,
-	 * in case eRecht24 ever echoes a secret/key back in an error body — this
-	 * log is exportable by the site owner via the Status tab.
+	 * Redact sensitive values before an API response is logged, in case
+	 * eRecht24 ever echoes a secret/key back in an error body — this log is
+	 * exportable by the site owner via the Status tab.
 	 *
-	 * @param array<string,mixed> $data Response data.
+	 * Redacts both by known field name (covers structured fields) and by
+	 * matching this site's actual key/secret values wherever they appear,
+	 * including inside free-text fields such as an error message.
+	 *
+	 * @param array<string,mixed> $data          Response data.
+	 * @param array<int,string>   $known_secrets This site's own key/secret values to scrub if echoed back.
 	 *
 	 * @return array<string,mixed>
 	 */
-	private static function redact_sensitive_fields( array $data ): array {
+	private function redact_sensitive_fields( array $data, array $known_secrets ): array {
 		static $sensitive_keys = array( 'secret', 'api_key', 'client_secret', 'erecht24_secret', 'password', 'token' );
 
 		foreach ( $data as $key => $value ) {
 			if ( is_array( $value ) ) {
-				$data[ $key ] = self::redact_sensitive_fields( $value );
+				$data[ $key ] = $this->redact_sensitive_fields( $value, $known_secrets );
 			} elseif ( is_string( $key ) && in_array( strtolower( $key ), $sensitive_keys, true ) ) {
 				$data[ $key ] = '(redacted)';
+			} elseif ( is_string( $value ) ) {
+				foreach ( $known_secrets as $secret ) {
+					if ( '' !== $secret ) {
+						$value = str_replace( $secret, '(redacted)', $value );
+					}
+				}
+
+				$data[ $key ] = $value;
 			}
 		}
 

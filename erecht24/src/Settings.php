@@ -46,13 +46,11 @@ final class Settings {
 	private array $pending_logs = array();
 
 	/**
-	 * Supported legal document types.
+	 * Supported legal document type keys.
+	 *
+	 * Not for display — use document_labels() for translated labels.
 	 */
-	public const DOCUMENT_TYPES = array(
-		'imprint'                     => 'Impressum',
-		'privacy_policy'              => 'Datenschutzerklärung',
-		'privacy_policy_social_media' => 'Datenschutzerklärung für Social Media',
-	);
+	public const DOCUMENT_TYPES = array( 'imprint', 'privacy_policy', 'privacy_policy_social_media' );
 
 	/**
 	 * Activate plugin settings and migrate legacy values.
@@ -61,7 +59,12 @@ final class Settings {
 	 */
 	public static function activate( bool $network_wide = false ): void {
 		if ( is_multisite() && $network_wide ) {
-			$site_ids = get_sites( array( 'fields' => 'ids' ) );
+			$site_ids = get_sites(
+				array(
+					'fields' => 'ids',
+					'number' => 0,
+				)
+			);
 
 			foreach ( $site_ids as $site_id ) {
 				switch_to_blog( (int) $site_id );
@@ -147,7 +150,7 @@ final class Settings {
 	public static function defaults(): array {
 		$documents = array();
 
-		foreach ( array_keys( self::DOCUMENT_TYPES ) as $type ) {
+		foreach ( self::DOCUMENT_TYPES as $type ) {
 			$documents[ $type ] = array(
 				'source' => 'remote',
 				'remote' => array(
@@ -362,6 +365,12 @@ final class Settings {
 	/**
 	 * Store an internal diagnostic log line.
 	 *
+	 * Messages are intentionally kept in English/technical wording, not
+	 * translated: this log is exported verbatim via the Status tab so it can
+	 * be pasted into a support ticket, and a language-independent log is
+	 * easier to read across support staff and eRecht24 developers regardless
+	 * of the site's locale.
+	 *
 	 * @param string $message Log message.
 	 */
 	public function add_log( string $message ): void {
@@ -440,7 +449,7 @@ final class Settings {
 				if ( isset( $document['local'][ $language ] ) ) {
 					$new_html = self::sanitize_html( $document['local'][ $language ] );
 
-					if ( $new_html !== ( $settings['documents'][ $type ]['local'][ $language ] ?? '' ) ) {
+					if ( ( $settings['documents'][ $type ]['local'][ $language ] ?? '' ) !== $new_html ) {
 						$content_changed = true;
 					}
 

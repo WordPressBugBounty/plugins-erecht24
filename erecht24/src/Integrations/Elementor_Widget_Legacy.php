@@ -21,4 +21,12 @@ final class Elementor_Widget_Legacy extends Elementor_Widget {
 	public function get_name() {
 		return 'erecht24';
 	}
+
+	/**
+	 * Hide from the "Add Widget" panel — existing pages keep rendering and
+	 * remain editable, but new insertions should use Elementor_Widget instead.
+	 */
+	public function show_in_panel() {
+		return false;
+	}
 }

@@ -17,6 +17,28 @@ defined( 'ABSPATH' ) || exit;
 final class Blocks {
 
 	/**
+	 * Attribute schema shared by both registered block names. Must stay in
+	 * sync with the block.json files below blocks/ — used only as fallback
+	 * when a metadata file is unreadable.
+	 *
+	 * @var array<string,array<string,mixed>>
+	 */
+	private const BLOCK_ATTRIBUTES = array(
+		'type'        => array(
+			'type'    => 'string',
+			'default' => 'imprint',
+		),
+		'lang'        => array(
+			'type'    => 'string',
+			'default' => 'de',
+		),
+		'strip_title' => array(
+			'type'    => 'boolean',
+			'default' => false,
+		),
+	);
+
+	/**
 	 * Shortcode renderer.
 	 *
 	 * @var Shortcodes
@@ -88,51 +110,42 @@ final class Blocks {
 
 		wp_set_script_translations( 'erecht24-legal-texts-block', 'erecht24', ERECHT24_LEGAL_TEXT_PATH . 'languages' );
 
-		register_block_type(
-			'erecht24/legal-text',
-			array(
-				'api_version'     => '3',
-				'editor_script'   => 'erecht24-legal-texts-block',
-				'editor_style'    => 'erecht24-legal-texts-block-editor',
-				'render_callback' => array( $this, 'render_block' ),
-				'attributes'      => array(
-					'type'        => array(
-						'type'    => 'string',
-						'default' => 'imprint',
-					),
-					'lang'        => array(
-						'type'    => 'string',
-						'default' => 'de',
-					),
-					'strip_title' => array(
-						'type'    => 'boolean',
-						'default' => false,
-					),
-				),
-			)
-		);
+		$this->register_block_variant( 'legal-text', 'erecht24/legal-text' );
 
 		// Legacy alias for blocks saved by the v3 plugin as 'erecht24/erecht24'.
+		$this->register_block_variant( 'legal-text-legacy', 'erecht24/erecht24' );
+	}
+
+	/**
+	 * Register one block name, preferring block.json metadata (Block API v3).
+	 *
+	 * @param string $folder     Metadata folder below blocks/.
+	 * @param string $block_name Full block name, used for the metadata-less fallback.
+	 */
+	private function register_block_variant( string $folder, string $block_name ): void {
+		$settings     = array( 'render_callback' => array( $this, 'render_block' ) );
+		$metadata_dir = ERECHT24_LEGAL_TEXT_PATH . 'blocks/' . $folder;
+
+		if ( is_readable( $metadata_dir . '/block.json' ) ) {
+			register_block_type( $metadata_dir, $settings );
+			return;
+		}
+
+		// Fallback: array-based registration as in plugin <= 4.0.5.
+		if ( 'erecht24/erecht24' === $block_name ) {
+			$settings['supports'] = array( 'inserter' => false );
+		}
+
 		register_block_type(
-			'erecht24/erecht24',
-			array(
-				'api_version'     => '3',
-				'editor_script'   => 'erecht24-legal-texts-block',
-				'render_callback' => array( $this, 'render_block' ),
-				'attributes'      => array(
-					'type'        => array(
-						'type'    => 'string',
-						'default' => 'imprint',
-					),
-					'lang'        => array(
-						'type'    => 'string',
-						'default' => 'de',
-					),
-					'strip_title' => array(
-						'type'    => 'boolean',
-						'default' => false,
-					),
-				),
+			$block_name,
+			array_merge(
+				$settings,
+				array(
+					'api_version'   => 3,
+					'editor_script' => 'erecht24-legal-texts-block',
+					'editor_style'  => 'erecht24-legal-texts-block-editor',
+					'attributes'    => self::BLOCK_ATTRIBUTES,
+				)
 			)
 		);
 	}

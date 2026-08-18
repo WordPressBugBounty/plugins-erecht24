@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Admin settings page.
  *
@@ -336,7 +335,7 @@ final class Admin_Page {
 		check_admin_referer( 'erecht24_legal_text_sync' );
 
 		$document = isset( $_POST['document'] ) ? sanitize_key( wp_unslash( $_POST['document'] ) ) : 'all';
-		$types    = 'all' === $document ? array_keys( Settings::DOCUMENT_TYPES ) : array( Settings::normalize_document_type( $document ) );
+		$types    = 'all' === $document ? Settings::DOCUMENT_TYPES : array( Settings::normalize_document_type( $document ) );
 		$failed   = array();
 		$success  = array();
 		$labels   = Settings::document_labels();
@@ -1042,8 +1041,8 @@ final class Admin_Page {
 		echo '<p class="description">' . esc_html__( 'Hier können Sie prüfen, ob Ihr Server die Systemvoraussetzungen für dieses Plugin erfüllt und ob die eRecht24-Server erreichbar sind.', 'erecht24' ) . '</p>';
 		echo '<p>' . esc_html__( 'Die Daten werden nur lokal angezeigt und erst durch Klick in die Zwischenablage kopiert. API-Schlüssel und Secret sind maskiert.', 'erecht24' ) . '</p>';
 		echo '<table class="widefat striped erecht24-status-table"><tbody>';
-		foreach ( $debug_data['status'] as $label => $value ) {
-			echo '<tr><th>' . esc_html( $label ) . '</th><td>' . esc_html( (string) $value ) . '</td></tr>';
+		foreach ( $debug_data['status'] as $row ) {
+			echo '<tr><th>' . esc_html( $row['label'] ) . '</th><td>' . esc_html( (string) $row['value'] ) . '</td></tr>';
 		}
 		echo '</tbody></table>';
 
@@ -1064,7 +1063,7 @@ final class Admin_Page {
 		}
 
 		echo '<p><button type="button" class="button button-secondary" id="erecht24-copy-debug">' . esc_html__( 'Log- und Systeminfos kopieren', 'erecht24' ) . '</button> <span id="erecht24-copy-debug-result" class="description"></span></p>';
-		echo '<textarea id="erecht24-debug-data" class="large-text code" rows="14" readonly>' . esc_textarea( wp_json_encode( $debug_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ) . '</textarea>';
+		echo '<textarea id="erecht24-debug-data" class="large-text code" rows="14" readonly>' . esc_textarea( wp_json_encode( $debug_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) ) . '</textarea>';
 		echo '</section>';
 	}
 
@@ -1208,7 +1207,7 @@ final class Admin_Page {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only navigation, no state change
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'settings';
 
-		if ( in_array( $tab, array( 'settings', 'google_analytics', 'status', 'help' ), true ) || isset( Settings::DOCUMENT_TYPES[ $tab ] ) ) {
+		if ( in_array( $tab, array( 'settings', 'google_analytics', 'status', 'help' ), true ) || in_array( $tab, Settings::DOCUMENT_TYPES, true ) ) {
 			return $tab;
 		}
 
@@ -1301,19 +1300,70 @@ final class Admin_Page {
 		}
 
 		return array(
+			// Each row keeps a stable, language-independent 'key' alongside the
+			// translated 'label', so the JSON export below stays machine-readable
+			// across locales while the on-screen table is fully translatable.
 			'status'    => array(
-				'WordPress'        => implode( '.', array_slice( explode( '.', (string) $wp_version ), 0, 2 ) ),
-				'PHP'              => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
-				'Plugin'           => ERECHT24_LEGAL_TEXT_VERSION,
-				'API-Key-Status'   => $this->get_api_status_label( $this->settings->get_api_key_status() ),
-				'API-Key'          => Settings::mask_secret( $this->settings->get_api_key() ),
-				'Client-ID'        => (string) $this->settings->get_client_id(),
-				'Push-Endpoint'    => rest_url( 'erecht24/v1/push' ),
-				'Home-URL'         => home_url( '/' ),
-				'Site-URL'         => site_url( '/' ),
-				'WP HTTP API'      => $status_checks['wp_remote']['message'],
-				'Remote-Push-Test' => $status_checks['push']['message'],
-				'REST API'         => rest_url(),
+				array(
+					'key'   => 'wordpress',
+					'label' => __( 'WordPress', 'erecht24' ),
+					'value' => implode( '.', array_slice( explode( '.', (string) $wp_version ), 0, 2 ) ),
+				),
+				array(
+					'key'   => 'php',
+					'label' => __( 'PHP', 'erecht24' ),
+					'value' => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
+				),
+				array(
+					'key'   => 'plugin',
+					'label' => __( 'Plugin', 'erecht24' ),
+					'value' => ERECHT24_LEGAL_TEXT_VERSION,
+				),
+				array(
+					'key'   => 'api_key_status',
+					'label' => __( 'API-Schlüssel-Status', 'erecht24' ),
+					'value' => $this->get_api_status_label( $this->settings->get_api_key_status() ),
+				),
+				array(
+					'key'   => 'api_key',
+					'label' => __( 'API-Schlüssel', 'erecht24' ),
+					'value' => Settings::mask_secret( $this->settings->get_api_key() ),
+				),
+				array(
+					'key'   => 'client_id',
+					'label' => __( 'Client-ID', 'erecht24' ),
+					'value' => (string) $this->settings->get_client_id(),
+				),
+				array(
+					'key'   => 'push_endpoint',
+					'label' => __( 'Push-Endpoint', 'erecht24' ),
+					'value' => rest_url( 'erecht24/v1/push' ),
+				),
+				array(
+					'key'   => 'home_url',
+					'label' => __( 'Home-URL', 'erecht24' ),
+					'value' => home_url( '/' ),
+				),
+				array(
+					'key'   => 'site_url',
+					'label' => __( 'Site-URL', 'erecht24' ),
+					'value' => site_url( '/' ),
+				),
+				array(
+					'key'   => 'wp_http_api',
+					'label' => __( 'WP HTTP API', 'erecht24' ),
+					'value' => $status_checks['wp_remote']['message'],
+				),
+				array(
+					'key'   => 'remote_push_test',
+					'label' => __( 'Remote-Push-Test', 'erecht24' ),
+					'value' => $status_checks['push']['message'],
+				),
+				array(
+					'key'   => 'rest_api',
+					'label' => __( 'REST API', 'erecht24' ),
+					'value' => rest_url(),
+				),
 			),
 			'documents' => $documents,
 			'logs'      => $this->settings->get_logs(),
