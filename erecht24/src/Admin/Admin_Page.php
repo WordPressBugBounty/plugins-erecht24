@@ -80,9 +80,17 @@ final class Admin_Page {
 	/**
 	 * Enqueue admin assets only on this settings page.
 	 *
-	 * @param string $hook_suffix Admin hook suffix.
+	 * WordPress core documents this hook's argument as always a string, but
+	 * some plugins render an admin dialog via iframe_header() before
+	 * wp-admin/admin.php has set the global $hook_suffix, causing
+	 * admin_enqueue_scripts to fire with null instead. Accept it loosely so
+	 * this plugin's own hook doesn't fatal-error unrelated admin screens.
+	 *
+	 * @param string|null $hook_suffix Admin hook suffix.
 	 */
-	public function enqueue_assets( string $hook_suffix ): void {
+	public function enqueue_assets( ?string $hook_suffix ): void {
+		$hook_suffix = (string) $hook_suffix;
+
 		if ( 'plugins.php' === $hook_suffix ) {
 			add_thickbox();
 			return;

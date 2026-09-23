@@ -4,7 +4,7 @@ Tags: legal, imprint, privacy, shortcode, gutenberg
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,6 +110,10 @@ The plugin adds a suggested privacy policy text via the WordPress privacy policy
 Complete rewrite. Settings are migrated automatically. Deactivate the previous eRecht24 plugin to avoid shortcode conflicts. Legacy shortcodes [impressum]/[datenschutz] are no longer supported — use [erecht24 type="imprint"] / [erecht24 type="privacy_policy"].
 
 == Changelog ==
+
+= 4.1.1 =
+
+* Fixed: A fatal error could occur on non-contiguous admin pages if another plugin rendered an admin dialog in a way that left the WordPress admin hook suffix empty.
 
 = 4.1.0 =
 
