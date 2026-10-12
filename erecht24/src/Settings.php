@@ -298,9 +298,39 @@ final class Settings {
 		$settings['api_key']        = self::encrypt_value( $clean_key );
 		$settings['api_key_status'] = '' === $clean_key ? 'missing' : 'valid';
 		$settings['client_id']      = absint( $client_id );
-		$settings['client_secret']  = self::encrypt_value( preg_replace( '/[^a-zA-Z0-9\-_=+\/]/', '', $client_secret ) );
+		$settings['client_secret']  = self::encrypt_value( self::normalize_client_secret( $client_secret ) );
 
 		$this->update_all( $settings );
+	}
+
+	/**
+	 * Normalize a push secret to the character set used for storage.
+	 *
+	 * Must be applied identically to the stored secret and to every incoming
+	 * secret: if eRecht24 ever issues a secret containing characters outside
+	 * this set, filtering only one side makes hash_equals() fail permanently.
+	 *
+	 * @param string $secret Raw secret.
+	 */
+	public static function normalize_client_secret( string $secret ): string {
+		return (string) preg_replace( '/[^a-zA-Z0-9\-_=+\/]/', '', $secret );
+	}
+
+	/**
+	 * Diagnose the stored push secret without exposing it.
+	 *
+	 * @return string 'ok', 'missing' (nothing stored) or 'undecryptable'
+	 *                (stored encrypted, but AUTH_KEY/AUTH_SALT changed or openssl is unavailable).
+	 */
+	public function get_client_secret_state(): string {
+		$settings = $this->get_all();
+		$raw      = (string) $settings['client_secret'];
+
+		if ( '' === $raw ) {
+			return 'missing';
+		}
+
+		return '' === self::decrypt_value( $raw ) ? 'undecryptable' : 'ok';
 	}
 
 	/**

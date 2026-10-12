@@ -115,6 +115,12 @@ final class Push_Controller extends WP_REST_Controller {
 		$sent_secret   = $this->get_secret_from_request( $request );
 
 		if ( '' === $stored_secret || '' === $sent_secret || ! hash_equals( $stored_secret, $sent_secret ) ) {
+			// Only the first failure per IP and rate-limit window is logged, so
+			// unauthenticated requests cannot flush the short admin log.
+			if ( 0 === $attempts ) {
+				$this->log_secret_mismatch( $stored_secret, $sent_secret, $safe_ip );
+			}
+
 			set_transient( $ip_key, $attempts + 1, 300 );
 			set_transient( $global_key, $global_attempts + 1, 300 );
 			return new WP_Error(
@@ -188,10 +194,39 @@ final class Push_Controller extends WP_REST_Controller {
 		$header_secret = $request->get_header( 'x-erecht24-secret' );
 
 		if ( is_scalar( $header_secret ) && '' !== trim( (string) $header_secret ) ) {
-			return preg_replace( '/[^a-zA-Z0-9\-_=+\/]/', '', wp_unslash( (string) $header_secret ) );
+			return Settings::normalize_client_secret( wp_unslash( (string) $header_secret ) );
 		}
 
-		return $this->get_scalar_request_value( $request, 'erecht24_secret', false );
+		return Settings::normalize_client_secret( $this->get_scalar_request_value( $request, 'erecht24_secret', false ) );
+	}
+
+	/**
+	 * Log why a push request was rejected, without logging either secret.
+	 *
+	 * @param string $stored_secret Stored (decrypted) secret.
+	 * @param string $sent_secret   Normalized secret from the request.
+	 * @param string $ip            Validated sender IP or 'unknown'.
+	 */
+	private function log_secret_mismatch( string $stored_secret, string $sent_secret, string $ip ): void {
+		if ( '' === $stored_secret ) {
+			$reason = 'undecryptable' === $this->settings->get_client_secret_state()
+				? 'stored secret cannot be decrypted (AUTH_KEY/AUTH_SALT changed?)'
+				: 'no secret stored locally';
+		} elseif ( '' === $sent_secret ) {
+			$reason = 'request contained no secret';
+		} else {
+			$reason = 'secrets differ';
+		}
+
+		$this->settings->add_log(
+			sprintf(
+				'Push request rejected from %1$s: %2$s (stored length %3$d, sent length %4$d).',
+				$ip,
+				$reason,
+				strlen( $stored_secret ),
+				strlen( $sent_secret )
+			)
+		);
 	}
 
 	/**
